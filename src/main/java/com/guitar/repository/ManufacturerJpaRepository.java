@@ -6,12 +6,14 @@ import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
+import org.springframework.security.access.prepost.PreAuthorize;
 
 import com.guitar.model.Manufacturer;
 
 @Repository
 //This changes the manufactures resource to mfgs and mfgs resources returned in the json
 @RepositoryRestResource(path="mfgs", collectionResourceRel="mfgs")
+@PreAuthorize("hasRole('ROLE_ADMIN')")
 public interface ManufacturerJpaRepository extends JpaRepository<Manufacturer, Long> {
 	List<Manufacturer> findByFoundedDateBefore(Date date);
 	
